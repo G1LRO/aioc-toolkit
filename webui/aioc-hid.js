@@ -733,6 +733,11 @@ document.getElementById('btn-ptt2-on').addEventListener('click',  () => setPTTSt
 document.getElementById('btn-ptt2-off').addEventListener('click', () => setPTTState(PTTChannel.PTT2, false).then(() => logOk('PTT2 OFF')).catch(e => logErr(e.message)));
 
 // USB ID
+document.getElementById('btn-usb-cm108').addEventListener('click', () => {
+  document.getElementById('usb-vid').value = '0x0D8C';
+  document.getElementById('usb-pid').value = '0x000C';
+  log('Filled CM108 VID/PID (0x0D8C:0x000C). Click Apply, then Store, then Reboot.');
+});
 document.getElementById('btn-usb-write').addEventListener('click', writeUSBID);
 
 // Dump
