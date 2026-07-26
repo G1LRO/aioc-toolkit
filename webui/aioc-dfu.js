@@ -6,8 +6,16 @@
 // tab never sends a DFU_DETACH itself. The user switches modes physically (see
 // the AIOC hardware docs) and reconnects, so HID and DFU sessions never overlap.
 
-const DFU_VID_FILTER = 0x1209; // same VID the AIOC uses in normal + DFU mode
 const AIOC_RELEASES_API = 'https://api.github.com/repos/skuep/AIOC/releases/latest';
+
+// Two known identities depending on how DFU mode was entered:
+//  - 1209:7388 — AIOC's own ID, used when firmware >=1.2.0 soft-triggers DFU itself
+//  - 0483:df11 — STMicro's stock ROM bootloader ID, used when DFU mode is entered via
+//                the physical BOOT0-pin-short method (the AIOC hardware docs' method)
+const DFU_USB_FILTERS = [
+  { vendorId: 0x1209 },
+  { vendorId: 0x0483, productId: 0xdf11 },
+];
 
 let dfuDevice = null;      // dfu.Device or dfuse.Device wrapping the open USBDevice
 let dfuTransferSize = 2048;
@@ -117,7 +125,7 @@ async function connectDfu() {
     return;
   }
   try {
-    const rawDevice = await navigator.usb.requestDevice({ filters: [{ vendorId: DFU_VID_FILTER }] });
+    const rawDevice = await navigator.usb.requestDevice({ filters: DFU_USB_FILTERS });
     const interfaces = dfu.findDeviceDfuInterfaces(rawDevice);
     if (!interfaces.length) {
       logErr('No DFU interface found on this device. Make sure the AIOC is in DFU/bootloader mode.');

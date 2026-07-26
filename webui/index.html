@@ -386,7 +386,7 @@
   <div class="card" id="card-dfu-intro">
     <div class="card-head"><h2>Before You Start</h2></div>
     <div class="card-body">
-      <p>The AIOC must already be in DFU (bootloader) mode before it will show up here — this tab does not switch it for you. See the <a href="https://github.com/skuep/AIOC#how-to-program" target="_blank" rel="noopener noreferrer">AIOC hardware docs</a> for how to enter DFU mode on your firmware version, then click <strong>Connect</strong> above and select the device (same USB ID as normal use, <code>1209:7388</code>, unless you've overridden it).</p>
+      <p>The AIOC must already be in DFU (bootloader) mode before it will show up here — this tab does not switch it for you. See the <a href="https://github.com/skuep/AIOC#how-to-program" target="_blank" rel="noopener noreferrer">AIOC hardware docs</a> for how to enter DFU mode on your firmware version, then click <strong>Connect</strong> above and select the device. Depending on how you entered DFU mode it may show up as <code>1209:7388</code> (AIOC's own ID) or <code>0483:df11</code> (STMicro's stock bootloader ID, used by the physical BOOT0-pin method).</p>
       <p style="margin-top:8px; color:var(--red)">⚠ Only flash official AIOC firmware images built for this hardware. The device's boot ROM is separate from application flash, so a failed flash is recoverable via the manual DFU-entry procedure — but a wrong or corrupt file can still leave the AIOC needing that recovery step.</p>
     </div>
   </div>
