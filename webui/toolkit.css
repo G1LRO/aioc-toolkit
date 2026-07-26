@@ -45,22 +45,25 @@
     }
 
     /* ── HEADER ────────────────────────────────────────── */
+    /* Fixed G1LRO brand orange — same in both themes, matches g1lro.uk's header
+       and the logo file's own background so the two blend together with no seam. */
     header {
       position: sticky; top: 0; z-index: 100;
       height: var(--header-h);
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
+      background: #ef5831;
+      border-bottom: 1px solid #ef5831;
       display: flex; align-items: center;
       padding: 0 20px; gap: 14px;
     }
-    .logo { font-size: 18px; font-weight: 700; letter-spacing: .5px; }
-    .logo em { font-style: normal; color: var(--accent); }
-    .badge {
+    .brand-logo { height: 34px; width: auto; display: block; }
+    .logo { font-size: 18px; font-weight: 700; letter-spacing: .5px; color: #1a1006; }
+    .logo em { font-style: normal; color: #1a1006; }
+    header .badge {
       font-size: 10px; font-weight: 700;
       letter-spacing: .8px; text-transform: uppercase;
       padding: 2px 7px; border-radius: 20px;
-      background: var(--badge-bg); color: var(--muted);
-      border: 1px solid var(--border);
+      background: rgba(0,0,0,.12); color: #1a1006;
+      border: 1px solid rgba(0,0,0,.2);
     }
     .meta {
       display: flex;
@@ -68,15 +71,15 @@
       gap: 10px;
       margin-left: 6px;
       font-size: 12px;
-      color: var(--muted);
+      color: #1a1006;
     }
     .meta a {
-      color: var(--accent);
+      color: #1a1006;
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color .2s;
     }
-    .meta a:hover { border-color: var(--accent); }
+    .meta a:hover { border-color: #1a1006; }
     @media(max-width:640px) {
       .meta { display: none; }
     }
@@ -84,11 +87,11 @@
     .btn-icon {
       display: flex; align-items: center; justify-content: center;
       width: 30px; height: 30px; padding: 0;
-      background: transparent; border: 1px solid var(--border);
-      border-radius: 6px; color: var(--muted); cursor: pointer;
+      background: transparent; border: 1px solid rgba(0,0,0,.25);
+      border-radius: 6px; color: #1a1006; cursor: pointer;
       transition: color .15s, border-color .15s;
     }
-    .btn-icon:hover { color: var(--accent); border-color: var(--accent); }
+    .btn-icon:hover { color: #000; border-color: #000; }
     .btn-icon svg { width: 16px; height: 16px; }
     .btn-icon .icon-moon { display: none; }
     :root[data-theme="dark"] .btn-icon .icon-sun  { display: none; }
