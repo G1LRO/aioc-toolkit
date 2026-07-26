@@ -391,6 +391,30 @@
     </div>
   </div>
 
+  <!-- ── LATEST FIRMWARE ── -->
+  <div class="card" id="card-dfu-firmware">
+    <div class="card-head">
+      <h2>Latest Firmware</h2>
+      <div class="acts">
+        <button class="btn btn-ghost btn-sm" id="btn-fw-check">Check Again</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="info-grid">
+        <div class="info-kv"><span class="k">Version</span><span class="v" id="fw-version">Checking…</span></div>
+        <div class="info-kv"><span class="k">Published</span><span class="v" id="fw-date">—</span></div>
+        <div class="info-kv"><span class="k">File</span><span class="v" id="fw-file">—</span></div>
+      </div>
+      <div class="action-grid" style="margin-top:12px">
+        <a class="btn btn-primary" id="btn-fw-download" href="#" download style="display:none">⬇ Download Firmware</a>
+      </div>
+      <p style="font-size:11px; color:var(--muted); margin-top:10px">
+        Fetched from <a href="https://github.com/skuep/AIOC/releases" target="_blank" rel="noopener noreferrer">skuep/AIOC releases</a>.
+        Browsers won't let this page load the file directly (GitHub doesn't allow cross-site fetches of release assets), so download it normally, then select it below.
+      </p>
+    </div>
+  </div>
+
   <!-- CONNECT PROMPT (shown when no DFU device) -->
   <div id="dfu-connect-prompt">
     <strong style="font-size:16px">No DFU device connected</strong>

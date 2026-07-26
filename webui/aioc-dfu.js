@@ -7,6 +7,7 @@
 // the AIOC hardware docs) and reconnects, so HID and DFU sessions never overlap.
 
 const DFU_VID_FILTER = 0x1209; // same VID the AIOC uses in normal + DFU mode
+const AIOC_RELEASES_API = 'https://api.github.com/repos/skuep/AIOC/releases/latest';
 
 let dfuDevice = null;      // dfu.Device or dfuse.Device wrapping the open USBDevice
 let dfuTransferSize = 2048;
@@ -260,8 +261,47 @@ window.addEventListener('beforeunload', () => {
   if (dfuDevice) dfuDevice.close().catch(() => {});
 });
 
+// ── Latest firmware lookup ───────────────────────────────────────────────────
+// GitHub's release API allows cross-origin reads, but the asset download itself
+// does not send CORS headers (it redirects to a signed blob-storage URL with
+// none) — so this can only point the user at a normal download link, not pull
+// the file into the page directly.
+async function checkLatestFirmware() {
+  const versionEl = document.getElementById('fw-version');
+  const dateEl = document.getElementById('fw-date');
+  const fileEl = document.getElementById('fw-file');
+  const downloadBtn = document.getElementById('btn-fw-download');
+  versionEl.textContent = 'Checking…';
+  dateEl.textContent = '—';
+  fileEl.textContent = '—';
+  downloadBtn.style.display = 'none';
+  try {
+    const res = await fetch(AIOC_RELEASES_API, { headers: { 'Accept': 'application/vnd.github+json' } });
+    if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
+    const release = await res.json();
+    const asset = (release.assets || []).find(a => a.name.endsWith('.bin'));
+    versionEl.textContent = release.tag_name || release.name || 'unknown';
+    dateEl.textContent = release.published_at ? new Date(release.published_at).toLocaleDateString() : '—';
+    if (asset) {
+      fileEl.textContent = `${asset.name} (${niceSize(asset.size)})`;
+      downloadBtn.href = asset.browser_download_url;
+      downloadBtn.download = asset.name;
+      downloadBtn.style.display = '';
+      logOk(`Latest AIOC firmware: ${release.tag_name} (${asset.name})`);
+    } else {
+      fileEl.textContent = 'No .bin asset found';
+      logWarn('Latest GitHub release has no .bin firmware asset.');
+    }
+  } catch (e) {
+    versionEl.textContent = 'Check failed';
+    logErr('Could not check latest firmware (' + (e.message || e) + ') — see github.com/skuep/AIOC/releases directly.');
+  }
+}
+document.getElementById('btn-fw-check').addEventListener('click', checkLatestFirmware);
+
 // ── Initial state ──────────────────────────────────────────────────────────
 setDfuConnected(false);
+checkLatestFirmware();
 log('Flash Firmware tab ready. Switch the AIOC into DFU mode, then click Connect.');
 if (!navigator.usb) {
   logErr('WebUSB is not supported in this browser. Use a compatible browser on a desktop computer.');
