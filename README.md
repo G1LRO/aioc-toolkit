@@ -6,6 +6,8 @@ in one page with no install and no build step.
 
 Live at: **https://g1lro.github.io/aioc-toolkit/**
 
+Blog post: [g1lro.uk/?p=1895](https://g1lro.uk/?p=1895)
+
 Runs entirely client-side in a Chromium-based browser (Chrome/Edge). Requires HTTPS or
 `localhost` for WebHID/WebUSB access.
 
