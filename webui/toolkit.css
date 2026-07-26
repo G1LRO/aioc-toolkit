@@ -55,6 +55,7 @@
       display: flex; align-items: center;
       padding: 0 20px; gap: 14px;
     }
+    .brand-logo-link { display: flex; align-items: center; }
     .brand-logo { height: 34px; width: auto; display: block; }
     .logo { font-size: 18px; font-weight: 700; letter-spacing: .5px; color: #1a1006; }
     .logo em { font-style: normal; color: #1a1006; }
